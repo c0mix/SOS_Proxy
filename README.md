@@ -10,7 +10,7 @@ Problematiche associate alla soluzione proposta:
 
 Per ciascun domino che il device richiede è necessario eseguire le seguenti operazioni:
 1. bisogna creare una interfaccia di rete virtuale
-2. bisogna mappare il dominio sull'interfaccia tramite modifica di /etc/hosts in modo tale che le richieste che il device fa a pippo.com andranno non più a 50.12.34.4 (vero IP di 68.66.200.200) ma a una interfaccia virtuale sul mio host es. 100.100.100.1
+2. bisogna mappare il dominio sull'interfaccia tramite modifica di /etc/hosts in modo tale che le richieste che il device fa a pippo.com andranno non più a 68.66.200.200 (vero IP di pippo.com) ma a una interfaccia virtuale sul mio host es. 100.100.100.1
 3. si deve creare un nuovo proxy all'interno di burp (a mano)
 4. si deve gestire il redirect da parte di burp al vero ip del dominio e gli eventuali errori di cert ssl (a mano)
 
@@ -29,7 +29,7 @@ Oltre alle funzionalità base il tool:
 - tcpdump
 
 ## NOTE
-- Il tool è molto quick & dirty, testato solo su ubuntu e, attualmente, scarsamente mantenuto
+- Il tool è molto quick & dirty, testato solo su *ubuntu* e, attualmente, scarsamente mantenuto
 - Il setup del lab per il testing suggerito in alto non è obbligatorio ma probabilmente è quello più "pulito" per analizzare il device.
 - Il tool non è stato testato a fondo quindi: be careful :) usate -a e -v per capire che sta succedendo ed i seguenti comandi come debug:
     - $ tail -f /tmp/domains <- file dove vengono stampati i domini trovati da tcpdump
