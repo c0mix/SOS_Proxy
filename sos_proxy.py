@@ -172,6 +172,8 @@ def cleanup(iface_counter, interface_real):
     if query_yes_no(question='[INFO] Would you like to save the current (modified) hosts file?'):
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M')
         filename = 'hosts_{}'.format(timestamp)
+        if not os.path.isdir('./hosts_files'):
+            os.mkdir('./hosts_files')
         cmd = 'sudo cp /etc/hosts hosts_files/{}'.format(filename)
         os.system(cmd)
         print '[INFO] hosts file saved in folder "hosts_files" as: {}'.format(filename)
