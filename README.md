@@ -1,37 +1,37 @@
 # SOS_Proxy
 
-Problema: hai un device su cui non riesci a impostare un proxy per sniffare il traffico.
+Is it possible to proxy a device that does not support this functionality?
+Sometime, under particular circumstancies, *YES*. You can do that with Burp Suite and the invisible poroxying technique explained at the following link.
+https://portswigger.net/burp/documentation/desktop/tools/proxy/options/invisible
 
-Setup: pc con 2 interfacce di rete "eth0" connesso a Internet e "wlan0" in modalità hotspot con il device collegato.
+> 1. Create a separate virtual network interface for each destination host. 
+> 2. Create a separate Proxy listener for each interface (or two listeners if HTTP and HTTPS are both in use).
+> 3. Using your hosts file, redirect each destination hostname to a different network interface (i.e., to a different listener).
+> 4. Configure Burp’s listener on each interface to redirect all traffic to the IP address of the host whose traffic was redirected to it.
 
-Soluzione: utilizzare la tecnica del DNS spoofing + invisible proxy per far passare il traffico da BURP (https://portswigger.net/burp/documentation/desktop/tools/proxy/options/invisible)
+SOS_Proxy is a simple Python tool that aims to automate the invisible proxy technique with the following features:
+- DNS traffic monitoring
+- Virtual interfaces creator
+- Print information to set Burp’s proxies
+- Possibility to choose which domain has to be intercepted
+- Possibility to backup and restore a hosts file configuration
 
-Problematiche associate alla soluzione proposta:
-
-Per ciascun domino che il device richiede è necessario eseguire le seguenti operazioni:
-1. bisogna creare una interfaccia di rete virtuale
-2. bisogna mappare il dominio sull'interfaccia tramite modifica di /etc/hosts in modo tale che le richieste che il device fa a pippo.com andranno non più a 68.66.200.200 (vero IP di pippo.com) ma a una interfaccia virtuale sul mio host es. 100.100.100.1
-3. si deve creare un nuovo proxy all'interno di burp (a mano)
-4. si deve gestire il redirect da parte di burp al vero ip del dominio e gli eventuali errori di cert ssl (a mano)
-
-Il tool automatizza i primi due punti e fornisce un output dettagliato su come impostare i vari proxy di burp.
-
-Oltre alle funzionalità base il tool:
-- Ripulisce la configurazione alla fine dei test
-- Consente il salvataggio del file hosts, nel caso si voglia riprendere l'analisi in un secondo momento
-- In modalità ask "-a" chiede se un dominio vada o meno intercettato
-- E' in grado di ripristinare "-r" una configurazione e di continuare l'attività da dove la si era lasciata
-
-## Dipendenze
+## Dependencies
 - tmux
-- ifconfig
-- python 2.7
 - tcpdump
+- ifconfig/ip
+- python 2.7
 
-## NOTE
-- Il tool è molto quick & dirty, testato solo su *ubuntu* e, attualmente, scarsamente mantenuto
-- Il setup del lab per il testing suggerito in alto non è obbligatorio ma probabilmente è quello più "pulito" per analizzare il device.
-- Il tool non è stato testato a fondo quindi: be careful :) usate -a e -v per capire che sta succedendo ed i seguenti comandi come debug:
-    - $ tail -f /tmp/domains <- file dove vengono stampati i domini trovati da tcpdump
-    - $ watch -n 2 ifconfig <- per vedere se le interfacce virtuali vengono create
-    - $ sudo tmux att -t Domain_Monitor <- per vedere se tmux con tcpdump è in esecuzione
+```
+$ sudo apt install tmux tcpdump
+```
+
+## Useful Resources
+In order to start Burp with enough privileges to bind a proxy on port 80/443 I suggest the use of this tool: *authbind* https://www.gremwell.com/node/387
+
+## Notes
+- This tool was made quick & dirty, actually it has been tested only on Ubuntu 18.04.3 LTS so be careful and use `-a` and `-v` parameters the first time you run it.
+- Following a simple list of useful commands for debugging the tool:
+    - $ tail -f /tmp/domains <- tcpdump write here the found domains
+    - $ watch -n 2 ip a <- monitor the virtual interface creation
+    - $ sudo tmux att -t Domain_Monitor <- check if tcpdump is working or not
