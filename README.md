@@ -42,25 +42,9 @@ optional arguments:
 ```
 
 ## Video Demo
-<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/R9VAWpXcXAw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-<style>
-	.video-container {
-	position:relative;
-	padding-bottom:56.25%;
-	padding-top:30px;
-	height:0;
-	overflow:hidden;
-}
+[![](http://img.youtube.com/vi/R9VAWpXcXAw/0.jpg)](https://www.youtube.com/watch?v=R9VAWpXcXAw)
 
-.video-container iframe, .video-container object, .video-container embed {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-}	
-</style>
-Please note that on the device it was already intalled a custom CA in order to break the SSL connection.
+Please note that on the device it was already installed a custom CA in order to break the SSL connection.
 
 ## Dependencies
 - tmux
