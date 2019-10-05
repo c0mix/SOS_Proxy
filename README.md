@@ -2,7 +2,7 @@
 
 Is it possible to proxy a device that does not support this functionality?
 
-Sometime, under particular circumstancies, *YES*. You can do that with Burp Suite and the invisible proxying technique explained at the following link.
+Sometime, under particular circumstances, *YES*. You can do that with Burp Suite and the invisible proxying technique explained at the following link.
 https://portswigger.net/burp/documentation/desktop/tools/proxy/options/invisible
 
 
